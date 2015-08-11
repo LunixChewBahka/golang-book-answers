@@ -20,16 +20,19 @@ func main() {
 
     // Question 3:
     fmt.Println("Question 3:")
-    c := make(chan int, 20)
+    c := make(chan int, 10)
     go func() {
         for i := 0; i < 20; i++ {
             c <- i
-            time.Sleep(time.Millisecond * 300)
+            time.Sleep(time.Millisecond * 10)
         }
     }()
     go func() {
-        for i := 0; i < 20; i++ {
+        for i := 0; i < 5; i++ {
+            time.Sleep(time.Millisecond * 2000)
             num := <- c
+            fmt.Printf("Received %d\n", num)
+            num = <- c
             fmt.Printf("Received %d\n", num)
         }
     }()
